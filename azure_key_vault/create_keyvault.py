@@ -1,18 +1,21 @@
 import os
-from azure.identity import DefaultAzureCredential, CredentialUnavailableError
+from azure.identity import DefaultAzureCredential
 from azure.mgmt.keyvault import KeyVaultManagementClient
-from azure.keyvault.secrets import SecretClient
+
 
 # Authenticate using the Azure Identity library
-# In Azure DevOps, this works if you use the Azure CLI or Managed Identity
+#Below works in local VS code, ensure to provide environment variables
+#subscription_id = os.environ.get("AZURE_SUBSCRIPTION_ID") 
+#tenant_id = os.environ.get("AZURE_TENANT_ID")
+
 credential = DefaultAzureCredential()
-subscription_id = os.environ.get("AZURE_SUBSCRIPTION_ID")  #"5e9e32c1-3ce2-41c4-958f-82dcdfb98924"
+subscription_id = os.environ.get("AZURE_SUBSCRIPTION_ID")
 
 # Step 1: Use Management SDK to create (or get) a Key Vault
 kv_client = KeyVaultManagementClient(credential, subscription_id)
 
-resource_group = "linuxvm-rg"
-vault_name = "iac-task-kv"
+resource_group = "<rg-name>"
+vault_name = "<key-vault-name>"
 location = "eastus2"
 
 # Check if the Key Vault already exists
